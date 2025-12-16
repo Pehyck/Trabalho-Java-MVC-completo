@@ -1,4 +1,4 @@
-package model;
+package main.model;
 
 public class ClienteDAO {
 
@@ -9,5 +9,3 @@ public class ClienteDAO {
     }
 
 }
-
-
