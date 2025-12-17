@@ -8,12 +8,17 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class ClienteSocket {
-    public static void main(String[] args){
+
+    private static final String HOST = "localhost";
+    private static final int PORTA = 12345;
+
+    
+    public void iniciar(){
         try{
             Cliente cliente;
             cliente = ClienteView.cadastroCliente();
 
-            Socket socket = new Socket("localhost", 12345);
+            Socket socket = new Socket(HOST, PORTA);
 
             ObjectOutputStream saida = new ObjectOutputStream(socket.getOutputStream());
             
@@ -27,5 +32,9 @@ public class ClienteSocket {
         }catch(Exception e){
             ClienteView.mostrarMensagem("Erro ao enviar dados: " + e.getMessage());
         }
+
+    }
+    public static void main(String[] args){
+        new ClienteSocket().iniciar();
     }
 }

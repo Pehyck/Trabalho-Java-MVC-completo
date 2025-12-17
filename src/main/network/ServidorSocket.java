@@ -7,12 +7,14 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class ServidorSocket {
-    public static void main(String[] args){
-        
-        int port = 12345;
-        System.out.println("Iniciando o servidor na porta " + port);
 
-        try (ServerSocket serverSocket = new ServerSocket(port)) {
+    private static final int PORTA = 12345;
+    private static final String ARQUIVO = "clientes.txt";
+
+    public void iniciar(){
+        System.out.println("Iniciando o servidor na porta " + PORTA);
+
+        try (ServerSocket serverSocket = new ServerSocket(PORTA)) {
             while (true) {
                 Socket socket = serverSocket.accept();
                 System.out.println("Cliente conectado: " + socket.getInetAddress());
@@ -37,10 +39,16 @@ public class ServidorSocket {
         }
     }
 
-    private static void salvarCliente(Cliente cliente) throws IOException{
-        BufferedWriter writer = new BufferedWriter(new FileWriter("clientes.txt", true));
+        private static void salvarCliente(Cliente cliente) throws IOException{
+        BufferedWriter writer = new BufferedWriter(new FileWriter(ARQUIVO, true));
+
         writer.write(cliente.getNome() + "," + cliente.getEmail());
         writer.newLine();
         writer.close();
     }
+    public static void main(String[] args){
+        new ServidorSocket().iniciar();
+    }
+
+
 }
