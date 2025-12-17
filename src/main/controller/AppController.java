@@ -1,7 +1,9 @@
 package main.controller;
 
+import main.network.ClienteSocket;
+
 public class AppController {
-    /* Código de validação de dados do cliente (comentado)
+    //Código de validação de dados do cliente (comentado)
         boolean dadosValidos = false;
         dadosValidos = validarCliente();
         if(!nome.isEmpty() && !email.isEmpty()){
@@ -16,9 +18,9 @@ public class AppController {
                         "Erro de Validação",
                         JOptionPane.ERROR_MESSAGE
                     );
-    */
+                }
 
-    /* Método para iniciar a aplicação chamado pelo MainApp 
+    //Método para iniciar a aplicação chamado pelo MainApp 
     public void start() {
         String[] opcoes = {
                 "Iniciar Servidor",
@@ -39,19 +41,36 @@ public class AppController {
 
             switch (escolha) {
                 case 0:
-                    ServidorSocket.main(null);
+                    iniciarServidor();
                     break;
                 case 1:
-                    ClienteSocket.main(null);
+                    iniciarCliente();
                     break;
                 default:
-                    JOptionPane.showMessageDialog(
-                        null,
-                        "Encerrando a aplicação.",
-                        "Saída",
-                        JOptionPane.INFORMATION_MESSAGE
-                    );
-                    System.exit(0);
+                    encerrarAplicacao();
+                    break;
             }
-    */
+        }
+
+
+        //Métodos para controle (privados):
+        private void iniciarServidor(){
+            ServidorSocket servidor = new ServidorSocket();
+            servidor.iniciar();
+        }
+        
+        private void iniciarCliente(){
+            ClienteSocket cliente = new ClienteSocket();
+            cliente.iniciar();
+        }
+        
+        private void encerrarAplicacao(){
+            JOptionPane.showMessageDialog(
+                null,
+                "Encerrando a aplicação.",
+                "Saída",
+                JOptionPane.INFORMATION_MESSAGE
+            );
+            System.exit(0);
+        }
 }
