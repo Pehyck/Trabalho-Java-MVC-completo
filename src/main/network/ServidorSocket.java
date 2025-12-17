@@ -1,6 +1,7 @@
-package main.server;
+package main.network;
 
-import model.Cliente;
+import main.model.Cliente;
+import main.model.ClienteDAO;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -25,17 +26,17 @@ public class ServidorSocket {
 
                 salvarCliente(cliente);
 
-                System.out.println(
-                    "Dados do cliente recebidos: " +
-                    "Nome: " + cliente.getNome() +
-                    ", Email: " + cliente.getEmail()
-                );
+                ClienteDAO dao = new ClienteDAO();
+                dao.DadosCliente(cliente);
+
                 entrada.close();
                 socket.close();
             }
 
         } catch (IOException e) {
             System.err.println("Erro no servidor: " + e.getMessage());
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 

@@ -1,6 +1,6 @@
 package main.view;
 
-import model.Cliente;
+import main.model.Cliente;
 import javax.swing.*;
 
 public class ClienteView {

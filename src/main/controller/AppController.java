@@ -1,25 +1,11 @@
 package main.controller;
 
 import main.network.ClienteSocket;
+import javax.swing.JOptionPane;
+import main.network.ServidorSocket;
 
 public class AppController {
-    //Código de validação de dados do cliente (comentado)
-        boolean dadosValidos = false;
-        dadosValidos = validarCliente();
-        if(!nome.isEmpty() && !email.isEmpty()){
-                    if(nome != null && email != null){
-                        if(email.contains("@email.com" ) || email.contains("@gmail.com") || email.contains("@outlook.com") || email.contains("@yahoo.com")){
-                            dadosValidos = true;
-                        }
-                    }
-                }else{
-                    JOptionPane.showMessageDialog(null,
-                        "Dados inválidos. Por favor, tente novamente.",
-                        "Erro de Validação",
-                        JOptionPane.ERROR_MESSAGE
-                    );
-                }
-
+    
     //Método para iniciar a aplicação chamado pelo MainApp 
     public void start() {
         String[] opcoes = {
