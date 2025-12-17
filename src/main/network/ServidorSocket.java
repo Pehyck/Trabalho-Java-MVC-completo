@@ -1,18 +1,21 @@
-package main.server;
+package main.network;
 
-import model.Cliente;
+import main.model.Cliente;
+import main.model.ClienteDAO;
 
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 public class ServidorSocket {
-    public static void main(String[] args){
-        
-        int port = 12345;
-        System.out.println("Iniciando o servidor na porta " + port);
 
-        try (ServerSocket serverSocket = new ServerSocket(port)) {
+    private static final int PORTA = 12345;
+    private static final String ARQUIVO = "clientes.txt";
+
+    public void iniciar(){
+        System.out.println("Iniciando o servidor na porta " + PORTA);
+
+        try (ServerSocket serverSocket = new ServerSocket(PORTA)) {
             while (true) {
                 Socket socket = serverSocket.accept();
                 System.out.println("Cliente conectado: " + socket.getInetAddress());
@@ -23,24 +26,30 @@ public class ServidorSocket {
 
                 salvarCliente(cliente);
 
-                System.out.println(
-                    "Dados do cliente recebidos: " +
-                    "Nome: " + cliente.getNome() +
-                    ", Email: " + cliente.getEmail()
-                );
+                ClienteDAO dao = new ClienteDAO();
+                dao.DadosCliente(cliente);
+
                 entrada.close();
                 socket.close();
             }
 
         } catch (IOException e) {
             System.err.println("Erro no servidor: " + e.getMessage());
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    private static void salvarCliente(Cliente cliente) throws IOException{
-        BufferedWriter writer = new BufferedWriter(new FileWriter("clientes.txt", true));
+        private static void salvarCliente(Cliente cliente) throws IOException{
+        BufferedWriter writer = new BufferedWriter(new FileWriter(ARQUIVO, true));
+
         writer.write(cliente.getNome() + "," + cliente.getEmail());
         writer.newLine();
         writer.close();
     }
+    public static void main(String[] args){
+        new ServidorSocket().iniciar();
+    }
+
+
 }
